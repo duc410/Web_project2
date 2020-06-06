@@ -7,7 +7,7 @@
 }
 
 .carousel-item {
-  height: 800px;
+  height: 500px;
 }
 
 .carousel-item img {
@@ -23,4 +23,37 @@
 
 .post-page{
   padding-top: 2rem ;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.case{
+  margin-top: 2rem;
+  margin-bottom:2rem;
+}
+
+.scroll {
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+}
+
+footer {
+  text-align: center;
+  padding: 3px;
+  background-color:  rgba(82, 64, 120, 0.9);
+  color: white;
+}
+
+.blog-section{
+  margin-bottom:2rem;
+}
+
+.blog-content{
+  margin-top:2rem;
 }
