@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const upload=require('express-fileupload')
 
 const app = express()
 const router = require('./router')
@@ -9,6 +10,7 @@ const errorHandler = require('./error-handler')
 const port = 9000
 
 // using middlewares
+app.use(upload())
 app.use(cors)
 app.use(bodyParser.json())
 

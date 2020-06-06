@@ -1,19 +1,20 @@
 // This list should be replace by a database table
-const list = [
-  {
+const list = [{
     id: '1591181282737',
-    title: 'Sữa chua'
+    title: 'Sữa chua',
+    description: '123',
+    content: '123',
+    image: 'E:/Git/Web_project2/dist/image/image_1.jpg'
   },
-  {
-    id: '1591181289860',
-    title: 'Kem đánh răng'
-  }
+
 ]
+
+const path=require('path')
 
 function listProductHandler(req, res, next) {
   try {
     res.json(list)
-  } catch(err) {
+  } catch (err) {
     next(err)
   }
 }
@@ -22,33 +23,51 @@ function findProductById(req, res, next) {
   try {
     let id = req.params.id
 
-    if(!id) {
+    if (!id) {
       throw new Error('Params id required!')
     }
     let product = list.find(item => item.id == id)
-    if(!product) {
+    if (!product) {
       throw new Error(`Not found item with id: '${id}'`)
     }
 
     res.json(product)
-  } catch(err) {
+  } catch (err) {
     next(err)
   }
 }
 
 function createProductHandler(req, res, next) {
   try {
-    let newProduct = req.body
 
-    if(!newProduct || !newProduct.title) {
+    let newProduct = req.body
+    if (!newProduct || !newProduct.title) {
       throw new Error(`Require item 'title'!`)
     }
 
-    newProduct.id = String(Date.now())
+    let date = Date.now()
+    newProduct.id = String(date)
+    let file = req.files.picture
+    let fileName = file.name
+    console.log(newProduct)
+
+    fileName = fileName.split('.').join('-' + date + '.');
+
+    file.mv("E:/Git/Web_project2/dist/image/" + fileName, function (err) {
+      if (err) {
+        console.log("error upload")
+      } else {
+        console.log("success upload")
+      }
+    })
+
+    newProduct.image =path.resolve("E:/Git/Web_project2/dist/image/",fileName)
+
     list.push(newProduct)
 
+    list.length=0
     res.json(newProduct)
-  } catch(err) {
+  } catch (err) {
     next(err)
   }
 }
@@ -59,21 +78,21 @@ function updateProductHandler(req, res, next) {
     let id = req.body.id
     let newTitle = req.body.title
 
-    if(!data || !data.id) {
+    if (!data || !data.id) {
       throw new Error(`Require product 'id'!`)
     }
-    if(!newTitle) {
+    if (!newTitle) {
       throw new Error(`Require product 'title'!`)
     }
 
     let product = list.find(item => item.id == id)
-    if(!product) {
+    if (!product) {
       throw new Error(`Not found product with id '${data.id}'`)
     }
     product.title = newTitle
 
     res.json(product)
-  } catch(err) {
+  } catch (err) {
     next(err)
   }
 }
@@ -81,19 +100,19 @@ function updateProductHandler(req, res, next) {
 function deleteProductHandler(req, res, next) {
   try {
     let id = req.params.id
-    
-    if(!id) {
+
+    if (!id) {
       throw new Error(`Require product 'id'!`)
     }
 
     let productIndex = list.findIndex(item => item.id == id)
-    if(!productIndex < 0) {
+    if (!productIndex < 0) {
       throw new Error(`Not found product with id: '${id}'`)
     }
     let product = list.splice(productIndex, 1)
-    
+
     res.json(product)
-  } catch(err) {
+  } catch (err) {
     next(err)
   }
 }

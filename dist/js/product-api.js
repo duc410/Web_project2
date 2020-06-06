@@ -18,3 +18,4 @@ async function createProduct(data) {
   let newProduct = await res.json()
   return newProduct
 }
+

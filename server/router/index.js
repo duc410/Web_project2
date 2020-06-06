@@ -8,6 +8,6 @@ const apiProductRouter = require('./api-product-router')
 
 router.use('/', express.static(staticPath))
 
-router.use('/api/product', apiProductRouter)
+router.use('/api/blog', apiProductRouter)
 
 module.exports = router
